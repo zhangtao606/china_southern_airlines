@@ -13,11 +13,10 @@
 <link type="text/css" rel="stylesheet" href="css/modal.min.css">
 
 <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
-
-
 <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 <script type="text/javascript" src="js/laydate/laydate.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
 <script src="js/vue.min.js"></script>
 <style type="text/css">
 	.getCode{
@@ -126,31 +125,31 @@
       mounted() {
         // 获取连接携带的参数
         this.userName = this.getUrlKey('userName');
-      this.idCard = this.getUrlKey('idCard');
-      this.flightNo = this.getUrlKey('flightNo');
-      this.startStation = this.getUrlKey('startStation');
-      this.terminalStation = this.getUrlKey('terminalStation');
-      this.flightDate = this.getUrlKey('flightDate');
-      this.telNumber = this.getUrlKey('telNumber');
-      // 获取当前日期
-      var myDate = new Date();
-      var year = myDate.getFullYear();    //获取完整的年份(4位,1970-????)
-      var month = myDate.getMonth() + 1;       //获取当前月份(0-11,0代表1月)
-      var day = myDate.getDate();        //获取当前日(1-31)
-      this.enrollDate = year+'-'+month+'-'+day;
-      var _this = this;
-      // 设置日期
-      laydate.render({
-        elem: '#test-n1'
-        ,position: 'static',
-        value: year+'-'+month+'-'+day,
-        done: function(value, date, endDate){
-          console.log(value); //得到日期生成的值，如：2017-08-18
-          // console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
-          // console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
-          _this.enrollDate = value;
-        }
-      });
+        this.idCard = this.getUrlKey('idCard');
+        this.flightNo = this.getUrlKey('flightNo');
+        this.startStation = this.getUrlKey('startStation');
+        this.terminalStation = this.getUrlKey('terminalStation');
+        this.flightDate = this.getUrlKey('flightDate');
+        this.telNumber = this.getUrlKey('telNumber');
+        // 获取当前日期
+        var myDate = new Date();
+        var year = myDate.getFullYear();    //获取完整的年份(4位,1970-????)
+        var month = myDate.getMonth() + 1;       //获取当前月份(0-11,0代表1月)
+        var day = myDate.getDate();        //获取当前日(1-31)
+        this.enrollDate = year+'-'+month+'-'+day;
+        var _this = this;
+        // 设置日期
+        laydate.render({
+          elem: '#test-n1'
+          ,position: 'static',
+          value: year+'-'+month+'-'+day,
+          done: function(value, date, endDate){
+            console.log(value); //得到日期生成的值，如：2017-08-18
+            // console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+            // console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+            _this.enrollDate = value;
+          }
+        });
       },
       methods:{
         selectBtn(item) {
@@ -165,9 +164,12 @@
         },
         getSms() {
           if (this.loading) {
-            return alert("正在请求短信，请等待");
+            return layer.msg("正在请求短信，请等待");
           }
           this.loading = true;
+          var index = layer.load(1, {
+              shade: [0.1,'#fff']
+          });
           var _this = this;
           $.ajax({
           url: "http://kwemobile.bceapp.com/maotai.php/index/getcode.html",
@@ -177,22 +179,27 @@
           },
           success: function(res){
             _this.loading = false;
+            layer.close(index)
             if (res == 1) {
-              alert("获取验证码成功")
+              layer.msg("获取验证码成功")
             } else {
-              alert("获取短信验证码失败")
+              layer.msg("获取短信验证码失败")
             }
           },
           error: function(res) {
+            layer.close(index)
             _this.loading = false;
           }
         });
         },
         send() {
           if (this.loading) {
-            return alert("正在提交数据");
+            return layer.msg("正在提交数据");
           }
           this.loading = true;
+          var index = layer.load(1, {
+              shade: [0.1,'#fff']
+          });
           var _this = this;
           $.ajax({
           url: "http://kwemobile.bceapp.com/maotai.php/index/addenroll.html",
@@ -213,13 +220,19 @@
           },
           success: function(res){
             _this.loading = false;
+            layer.close(index)
             if (res == 1) {
-              alert('提交成功');
+              layer.msg('提交成功');
             }else{
-              alert("系统错误码:" + res);
+              console.log(res)
+              layer.open({
+                type: 1, 
+                content: res
+              });
             }
           },
           error: function(res) {
+            layer.close(index)
             _this.loading = false;
           }
         });
