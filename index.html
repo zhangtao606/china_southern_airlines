@@ -7,18 +7,17 @@
 <title>南航预约买酒</title>
 <link type="text/css" rel="stylesheet" href="css/index.css">
 <link rel="stylesheet" href="css/normalize.min.css">
-<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
-<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Montserrat'>
 <link rel="stylesheet" href="css/style.css">
 <link type="text/css" rel="stylesheet" href="css/modal.min.css">
 
 <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
-<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 <script type="text/javascript" src="js/laydate/laydate.js"></script>
 <script type="text/javascript" src="js/layer/layer.js"></script>
 <script src="js/vue.min.js"></script>
 <style type="text/css">
+  body{
+    margin:0 20px;
+  }
 	.getCode{
 		width: auto;
 		line-height: 40px;
@@ -224,11 +223,8 @@
             if (res == 1) {
               layer.msg('提交成功');
             }else{
-              console.log(res)
-              layer.open({
-                type: 1, 
-                content: res
-              });
+              var reg = /<(p)[^>]*>[^<]*<\/(\1)>/gi;
+              layer.msg(reg.exec(res)[0] || '其他信息错误');
             }
           },
           error: function(res) {
