@@ -1,0 +1,194 @@
+.demo{background: #d57d7d;padding: 1.5em 0;font-family: 'Microsoft YaHei','Lantinghei SC','Open Sans',Arial,'Hiragino Sans GB','STHeiti','WenQuanYi Micro Hei','SimSun',sans-serif;height: 100vh;}
+a:hover,a:focus{outline: none;text-decoration: none;}
+.tab .nav-tabs{position: relative;border-bottom: 0 none;}
+.tab .nav-tabs li{text-align: center;}
+.tab .nav-tabs li a{display: block;height: 70px;line-height: 65px;background: linear-gradient(165deg, transparent 29%, #908a78 30%);font-size: 15px;font-weight: 600;color: #fff;text-transform: uppercase;margin-right: 0;border-radius: 0;border: none;position: relative;transition: all 0.5s ease 0s;}
+.tab .nav-tabs li.active a,.tab .nav-tabs li a:hover{background: linear-gradient(165deg, transparent 29%, #efe8d5 30%);border: none;color: #908a78;}
+.tab .nav-tabs li a:before{content: "";height: 70px;line-height: 90px;border-bottom: 70px solid rgba(0, 0, 0, 0.1);border-right: 10px solid transparent;position: absolute;top: 0;left: 100%;z-index: 1;}
+.tab .nav-tabs li:last-child a:before{border: none;}
+.tab .tab-content{font-size: 14px;color: #6f6c6c;line-height: 26px;background: #efe8d5;padding: 20px;height:90vh;}
+.tab .tab-content h3{font-size: 24px;color: #6f6c6c;margin-top: 0;}
+/*.tab .tab-content p{margin-bottom: 0;text-align: justify;text-indent: 2em;}*/
+@media only screen and (max-width: 480px){
+	.tab .nav-tabs li{width: 50%;margin-bottom: 8px;}
+	.tab .nav-tabs li:last-child{margin-bottom: 0;}
+	.tab .nav-tabs li a:before{border: none;}
+	.tab .nav-tabs li a{font-size: 0.8em;}
+}
+body{background: #d57d7d!important;}
+.input_control{
+  width:70vw;
+  margin:10px auto;
+}
+input[type="text"],#btn1,#btn2{
+  box-sizing: border-box;
+  text-align:center;
+  font-size:1.4em;
+  height:2.4em;
+  border-radius:4px;
+  border:1px solid #c8cccf;
+  color:#6a6f77;
+  -web-kit-appearance:none;
+  -moz-appearance: none;
+  display:block;
+  outline:0;
+  padding:0 1em;
+  text-decoration:none;
+  width:100%;
+}
+input[type="text"]:focus{
+  border:1px solid #ff7496;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: #6a6f77;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #6a6f77;
+}
+input::-webkit-input-placeholder{
+  color: #6a6f77;
+}
+.mtop{
+	margin-top: 26vh;
+}
+.logo_img{width: 32vw;
+    margin-left: 25vw;
+    margin-top: -25vh;}
+
+.yuyue{
+	float: left;
+	font-size:1.4em;
+    margin-top: 1.5vh;
+}
+
+.subtraction{
+	    float: left;
+    height: 4.2vh;
+    width: 8vw;
+    margin-top: 1.5vh;
+    font-size: 30px;
+	border: 1px solid #c8cccf;
+	background-color: white;
+	border-radius: 4px;
+}
+
+.subtraction_d{
+	    float: left;
+    height: 4.2vh;
+    width: 8vw;
+    margin-top: 1.5vh;
+    font-size: 30px;
+}
+
+.add{
+	    float: left;
+    height: 4.2vh;
+    width: 8vw;
+    margin-top: 1.5vh;
+    font-size: 30px;
+	margin-left:2vw;
+	display:none;
+	border: 1px solid #c8cccf;
+	background-color: white;
+	border-radius: 4px;
+}
+
+.number{
+	float: left;
+	width: 18vw!important;
+	margin-left: 2vw;
+}
+
+.number_d{
+	float: left;
+	width: 18vw!important;
+	margin-left: 2vw;
+}
+
+.lim_float_icon_pc {
+    position: fixed;
+    width: 11%;
+    top: 50%;
+    right: 0px;
+    margin-top: -134px;
+    z-index: 8;
+    background: #fff;
+    text-align: center;
+    border: 1px solid #dcdcdc;
+    padding: 15px 15px 8px 0px;
+	writing-mode: tb-rl;
+	border-radius: 4px;
+	margin-right:5px;
+}
+
+.form_list .item {
+
+    height: 30px;
+    line-height: 30px;
+    margin-bottom: 16px;
+    position: relative;
+
+}
+
+.mb_0 {
+    margin-bottom: 0px !important;
+}
+
+.pt_10 {
+    padding-top: 10px;
+	float:left;
+}
+
+.clearfix {
+    display: block;
+}
+
+.txt_check {
+    float: left;
+    *margin-top: -4px;
+}
+
+.txt_check_label {
+    float: left;
+    line-height: normal;
+    margin-left: 6px;
+}
+
+.gray {
+    color: #666 !important;
+}
+
+
+.lim_float_icon_pc .lim1 {
+    cursor: pointer;
+}
+
+.mg{margin-top:-3vh;}
+
+.hide{display:none;}
+
+.bold{font-weight: bold;}
+
+.valid{        
+    margin-top: 12vh;
+    margin-left: 7vw;
+}
+
+.fl{float: left;}
+
+.validinput{width: 42vw!important;}
+
+.validimg{float: left;margin-left: 2vw;margin-top: 5px;width: 70px;height: 30px;}
+
+#a_form{margin-top: 23vh;background-color: lightcoral;pointer-events:none;}
+#d_form{margin-top: 23vh;background-color: lightcoral;}
+
+#text2{border-style: none;
+margin-left: -2.5vw;
+background-color:
+transparent;
+color:black;}
+
+#text{pointer-events:none;}
+#validimg{pointer-events:none;}

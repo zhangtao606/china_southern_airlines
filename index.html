@@ -1,1 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>预约买酒</title>
+<link type="text/css" rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/normalize.min.css">
+<link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
+<link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Montserrat'>
+<link rel="stylesheet" href="css/style.css">
+<link type="text/css" rel="stylesheet" href="css/modal.min.css">
 
+<script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+
+
+<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<script type="text/javascript" src="js/laydate/laydate.js"></script>
+<script src="js/vue.min.js"></script>
+<style type="text/css">
+	.getCode{
+		width: auto;
+		line-height: 40px;
+		text-align: center;
+		margin: 20px;
+		color: #fff;
+		background-color: #3595f4;
+		border-radius: 10px;
+		cursor: pointer;
+	}
+	.codeBox, .codeImg{
+		width: 100%;
+		text-align: center;
+		margin: 10px 0;
+	}
+	.codeImg img{
+		width: 100px;
+		height: 50px;
+		margin: 0 auto;
+		cursor: pointer;
+	}
+	.sendBox{
+		width: auto;
+		line-height: 40px;
+		text-align: center;
+		margin: 20px;
+		color: #fff;
+		background-color: #3595f4;
+		border-radius: 10px;
+		cursor: pointer;
+	}
+	.tjBox{
+		text-align: center;
+	}
+	.tjItem{
+		width: 28%;
+		height: 30px;
+		margin: 5px 2%;
+		line-height: 30px;
+		text-align: center;
+		color: #3595f4;
+		background-color: #fff;
+		border-radius: 10px;
+	}
+	.tjItem-active{
+		color: #fff;
+		background-color: #3595f4;
+	}
+</style>
+
+</head>
+<body>
+<div class="demo">
+	<div class="container">
+		<div id="maotai">
+			<div class="codeBox">
+				<input type="text" placeholder="请填写短信验证码" v-model="smsCode">
+			</div>
+			<div class="getCode" @click="getSms">获取验证码</div>
+			<div>提酒日期</div>
+			<div class="tjBox">
+				<div id="test-n1"></div>
+			</div>
+			<div class="sendBox" @click="send">提交</div>
+			<div>
+				<div>姓名：{{userName}}</div>
+				<div>身份证号：{{idCard}}</div>
+				<div>手机号：{{telNumber}}</div>
+				<div>票号：{{flightNo}}</div>
+				<div>起飞机场：{{startStation}}</div>
+				<div>降落机场：{{terminalStation}}</div>
+				<div>航班日期：{{flightDate}}</div>
+				<div>提酒日期：{{enrollDate}}</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+	$.ajaxPrefilter( function (options) {
+    if (options.crossDomain && jQuery.support.cors) {
+        var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+        options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+    }
+  });
+  new Vue({
+      el:'#maotai',
+      data:{
+          userName: '',
+      idCard: '',
+      member: 1, // 会员级别 1,2,3
+      flightNo: '', // 请输入4位数航班号
+      startStation: '', // 起飞
+      terminalStation: '', // 降落
+      flightDate: '', // 航班日期：
+      enrollDate: '', // 提酒日期
+      telNumber: '', // 手机号
+      service: 'on',
+      secret: 'on',
+      smsCode: '',
+      loading: false,
+      },
+      mounted() {
+        // 获取连接携带的参数
+        this.userName = this.getUrlKey('userName');
+      this.idCard = this.getUrlKey('idCard');
+      this.flightNo = this.getUrlKey('flightNo');
+      this.startStation = this.getUrlKey('startStation');
+      this.terminalStation = this.getUrlKey('terminalStation');
+      this.flightDate = this.getUrlKey('flightDate');
+      this.telNumber = this.getUrlKey('telNumber');
+      // 获取当前日期
+      var myDate = new Date();
+      var year = myDate.getFullYear();    //获取完整的年份(4位,1970-????)
+      var month = myDate.getMonth() + 1;       //获取当前月份(0-11,0代表1月)
+      var day = myDate.getDate();        //获取当前日(1-31)
+      this.enrollDate = year+'-'+month+'-'+day;
+      var _this = this;
+      // 设置日期
+      laydate.render({
+        elem: '#test-n1'
+        ,position: 'static',
+        value: year+'-'+month+'-'+day,
+        done: function(value, date, endDate){
+          console.log(value); //得到日期生成的值，如：2017-08-18
+          // console.log(date); //得到日期时间对象：{year: 2017, month: 8, date: 18, hours: 0, minutes: 0, seconds: 0}
+          // console.log(endDate); //得结束的日期时间对象，开启范围选择（range: true）才会返回。对象成员同上。
+          _this.enrollDate = value;
+        }
+      });
+      },
+      methods:{
+        selectBtn(item) {
+          this.selectIndex = item;
+        },
+        getUrlKey(key) {
+          var url = decodeURIComponent(window.location.search)
+          var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)", "i");
+          var r = url.substr(1).match(reg);
+          console.log(window.location.search)
+          if (r != null) return unescape(r[2]); return null;
+        },
+        getSms() {
+          if (this.loading) {
+            return alert("正在请求短信，请等待");
+          }
+          this.loading = true;
+          var _this = this;
+          $.ajax({
+          url: "http://kwemobile.bceapp.com/maotai.php/index/getcode.html",
+          type: "post",
+          data: {
+            tel:_this.telNumber,
+          },
+          success: function(res){
+            _this.loading = false;
+            if (res == 1) {
+              alert("获取验证码成功")
+            } else {
+              alert("获取短信验证码失败")
+            }
+          },
+          error: function(res) {
+            _this.loading = false;
+          }
+        });
+        },
+        send() {
+          if (this.loading) {
+            return alert("正在提交数据");
+          }
+          this.loading = true;
+          var _this = this;
+          $.ajax({
+          url: "http://kwemobile.bceapp.com/maotai.php/index/addenroll.html",
+          type: "post",
+          data: {
+            'name': _this.userName,
+            'id-card': _this.idCard,
+            'ticket': _this.flightNo,
+            'setoff': _this.startStation,
+            'arrive': _this.terminalStation,
+            'flt-date': _this.flightDate,
+            'tel': _this.telNumber,
+            'enroll-date':_this.enrollDate,
+            'code':_this.smsCode,
+            'member': _this.member,
+            'service': 'on',
+            'secret': 'on',
+          },
+          success: function(res){
+            _this.loading = false;
+            if (res == 1) {
+              alert('提交成功');
+            }else{
+              alert("系统错误码:" + res);
+            }
+          },
+          error: function(res) {
+            _this.loading = false;
+          }
+        });
+        },
+      }
+   })
+</script>
