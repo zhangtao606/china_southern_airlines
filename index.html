@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>预约买酒</title>
+<title>南航预约买酒</title>
 <link type="text/css" rel="stylesheet" href="css/index.css">
 <link rel="stylesheet" href="css/normalize.min.css">
 <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
@@ -108,19 +108,19 @@
   new Vue({
       el:'#maotai',
       data:{
-          userName: '',
-      idCard: '',
-      member: 1, // 会员级别 1,2,3
-      flightNo: '', // 请输入4位数航班号
-      startStation: '', // 起飞
-      terminalStation: '', // 降落
-      flightDate: '', // 航班日期：
-      enrollDate: '', // 提酒日期
-      telNumber: '', // 手机号
-      service: 'on',
-      secret: 'on',
-      smsCode: '',
-      loading: false,
+        userName: '', // 姓名
+        idCard: '', // 身份证号
+        member: 1, // 会员级别 1,2,3
+        flightNo: '', // 请输入4位数航班号
+        startStation: '', // 起飞
+        terminalStation: '', // 降落
+        flightDate: '', // 航班日期：
+        enrollDate: '', // 提酒日期
+        telNumber: '', // 手机号
+        service: 'on',
+        secret: 'on',
+        smsCode: '',
+        loading: false,
       },
       mounted() {
         // 获取连接携带的参数
